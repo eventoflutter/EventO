@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'EventO',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         //  textTheme:GoogleFonts.latoTextTheme(textTheme).copyWith(

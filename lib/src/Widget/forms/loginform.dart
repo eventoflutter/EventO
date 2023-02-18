@@ -3,17 +3,29 @@
 import 'package:final_year_project/src/Widget/Controller/logincontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../Buttons/gradientButton.dart';
 
-class loginform extends StatelessWidget {
+class loginform extends StatefulWidget {
   const loginform({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<loginform> createState() => _loginformState();
+}
 
+class _loginformState extends State<loginform> {
+  late bool _passVis;
+
+  @override
+  void initState() {
+    super.initState();
+    _passVis = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final controller = Get.put(logincontroller());
 
     final formKey = GlobalKey<FormState>();
@@ -23,46 +35,58 @@ class loginform extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
-          children:  [
+          children: [
             TextFormField(
               controller: controller.email,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.email_outlined),
                 labelText: "E-mail",
                 hintText: "E-mail",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50))
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
               ),
+              textInputAction: TextInputAction.next,
             ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
               controller: controller.password,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.fingerprint),
+              obscureText: !_passVis,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.fingerprint),
                 labelText: "Password",
                 hintText: "Password",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50))
-                ),
+                border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
                 suffixIcon: IconButton(
-                  onPressed: null,
-                  icon: Icon(Icons.remove_red_eye_sharp),
+                  onPressed: () {
+                    setState(() {
+                      _passVis = !_passVis;
+                    });
+                  },
+                  icon: Icon(_passVis ? LineAwesomeIcons.eye_1 : LineAwesomeIcons.eye_slash_1),
                 ),
               ),
+              
             ),
-            const SizedBox(height: 20,),
-            GradientButton(context: context, textto: 'Login', radius: 50, press: () {
-              if (formKey.currentState!.validate()) {
-                logincontroller.instance.login(controller);
-              }
-            },),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            GradientButton(
+              context: context,
+              textto: 'Login',
+              radius: 50,
+              press: () {
+                if (formKey.currentState!.validate()) {
+                  logincontroller.instance.login(controller);
+                }
+              },
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
