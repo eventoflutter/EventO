@@ -26,6 +26,11 @@ class create_Event_Controller extends GetxController {
     }
   }
 
+  // Page 3
+  
+
+
+
   // Liquid Swipe Controller
 
   final lqController = LiquidController();
