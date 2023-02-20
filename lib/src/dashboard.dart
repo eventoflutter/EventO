@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:final_year_project/src/Pages/eventlist.dart';
+import 'package:final_year_project/src/Widget/Event/createEvent.dart';
 // import 'package:final_year_project/src/Menus/MenuTabBar.dart';
 import 'package:final_year_project/src/constants/image_constants.dart';
 import 'package:final_year_project/src/profile.dart';
@@ -24,7 +26,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
   final List<Widget> bottomBarPages = [
     const Page1(),
     const Page2(),
-    const Page3(),
+    const eventlist(),
     const Page4(),
     const Page5(),
   ];
@@ -46,6 +48,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
+          bottomOpacity: 0,
+          shadowColor: const Color.fromARGB(21, 0, 0, 0),
           leading: const Icon(
             Icons.menu,
             color: Colors.black54,
@@ -85,7 +89,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                 color: Colors.white,
                 showLabel: false,
                 notchColor: Colors.white,
-                bottomBarItems:  [
+                bottomBarItems: [
                   const BottomBarItem(
                     inActiveItem: Icon(
                       Icons.home_filled,
@@ -104,7 +108,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                     ),
                     activeItem: Icon(
                       Icons.star,
-                      color: Colors.blueAccent,
+                      color:  Colors.blueAccent,
                     ),
                     itemLabel: 'Page 2',
                   ),
@@ -119,18 +123,29 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                     activeItem: Container(
                       alignment: Alignment.center,
                       child: Stack(
-                        children: 
-                          [
-                            Positioned(
-                              top: -16,
-                              left: -16,
-                              child: IconButton(
-                                onPressed: () {}, 
-                                iconSize: 40,
-                                icon: const Icon(Icons.add_rounded, color: Colors.blueAccent,),
+                        children: [
+                          Positioned(
+                            top: -16,
+                            left: -16,
+                            child: IconButton(
+                              onPressed: () {
+                                Get.to(
+                                  const createEvent(),
+                                  transition: Transition.downToUp,
+                                  curve: Curves.easeOutCirc,
+                                  duration: const Duration(seconds: 1),
+                                  popGesture: false
+                                );
+                                // Navigator.push(context, ConcentricPageRoute(builder: (ctx) {return const createEvent();}));
+                              },
+                              iconSize: 40,
+                              icon: const Icon(
+                                Icons.add_rounded,
+                                color: Colors.blueAccent,
                               ),
                             ),
-                          ],
+                          ),
+                        ],
                       ),
                     ),
                     itemLabel: 'Page 3',
@@ -179,7 +194,7 @@ class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // color: const Color(0xffb5d6d6), 
+        // color: const Color(0xffb5d6d6),
         color: Colors.white,
         child: const Center(child: Text('Page 1')));
   }
@@ -192,7 +207,7 @@ class Page2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         // color: const Color(0xFFABD0A1),
-        color: Colors.white, 
+        color: Colors.white,
         child: const Center(child: Text('Page 2')));
   }
 }
@@ -203,7 +218,7 @@ class Page3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // color: const Color(0xFFA3A1D0), 
+        // color: const Color(0xFFA3A1D0),
         color: Colors.white,
         child: const Center(child: Text('Page 3')));
   }
@@ -215,7 +230,7 @@ class Page4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // color: const Color(0xFFD0A1A1), 
+        // color: const Color(0xFFD0A1A1),
         color: Colors.white,
         child: const Center(child: Text('Page 4')));
   }
