@@ -2,12 +2,13 @@
 
 import 'package:final_year_project/src/Pages/createEventPages/page1.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page2.dart';
+import 'package:final_year_project/src/Pages/createEventPages/page3.dart';
 import 'package:final_year_project/src/Widget/Buttons/pageNavButton.dart';
 import 'package:final_year_project/src/Widget/Controller/createEventController.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
+// import 'package:liquid_swipe/liquid_swipe.dart';
 
 class createEvent extends StatefulWidget {
   const createEvent({super.key});
@@ -21,21 +22,26 @@ class _createEventState extends State<createEvent> {
 
   @override
   Widget build(BuildContext context) {
-  var pages = [
-            create_event_page_1(controller: controller,),
-            create_event_page_2(controller: controller,),
-            create_event_page_1(controller: controller,),
-          ];
+    var pages = [
+      create_event_page_1(
+        controller: controller,
+      ),
+      create_event_page_2(
+        controller: controller,
+      ),
+      const create_event_page_3(),
+    ];
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: [
-          LiquidSwipe(
-              liquidController: controller.lqController,
-              enableLoop: false,
-              onPageChangeCallback: controller.onPageChanged,
-              pages: pages,
-            ),
+          PageView(
+            controller: controller.pageController.value,
+            allowImplicitScrolling: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            onPageChanged: controller.onPageChanged,
+            children: pages,
+          ),
           Obx(() {
             bool page = (controller.currentPage.value) != 0;
             return (page)
@@ -47,11 +53,12 @@ class _createEventState extends State<createEvent> {
                     press: () {
                       controller.prevPage();
                     },
+                    color: Colors.white.withOpacity(0.6),
                   )
                 : Container();
           }),
           Obx(() {
-            bool page = (controller.currentPage.value) != 2;
+            bool page = (controller.currentPage.value) != -1;
             return (page)
                 ? pageNavBtn(
                     controller: controller,
@@ -59,8 +66,11 @@ class _createEventState extends State<createEvent> {
                     right: 40,
                     text: "nxtbtn",
                     press: () {
+                      // (controller.currentPage.value) != 1
                       controller.nextPage();
+                      // : Get.to();
                     },
+                    color: const Color.fromARGB(255, 104, 159, 255),
                   )
                 : Container();
           }),
@@ -70,9 +80,9 @@ class _createEventState extends State<createEvent> {
               return Center(
                 child: AnimatedSmoothIndicator(
                   activeIndex: controller.currentPage.value,
-                  count: 3,
-                  effect: const WormEffect(
-                      dotHeight: 8, activeDotColor: Colors.blueAccent),
+                  count: pages.length,
+                  effect: const ExpandingDotsEffect(expansionFactor: 2, dotHeight: 8, activeDotColor: Colors.blueAccent),
+                  // const WormEffect(dotHeight: 8, activeDotColor: Colors.blueAccent),
                 ),
               );
             }),
@@ -82,6 +92,3 @@ class _createEventState extends State<createEvent> {
     );
   }
 }
-
-
-

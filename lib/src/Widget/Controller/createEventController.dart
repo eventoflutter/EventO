@@ -27,13 +27,10 @@ class create_Event_Controller extends GetxController {
   }
 
   // Page 3
-  
 
+  // Page Veiw controller
 
-
-  // Liquid Swipe Controller
-
-  final lqController = LiquidController();
+  final pageController = PageController().obs;
   RxInt currentPage = 0.obs;
 
   onPageChanged(int activePageIndex) {
@@ -41,11 +38,27 @@ class create_Event_Controller extends GetxController {
   }
 
   prevPage() {
-    int prevPage = lqController.currentPage - 1;
-    lqController.animateToPage(page: prevPage);
+    pageController.value.animateToPage(currentPage.value - 1, duration: const Duration(milliseconds: 600), curve: Curves.fastOutSlowIn);
   }
   nextPage() {
-    int nextPage = lqController.currentPage + 1;
-    lqController.animateToPage(page: nextPage);
+    pageController.value.animateToPage(currentPage.value + 1, duration: const Duration(milliseconds: 600), curve: Curves.fastOutSlowIn);
   }
+  // Liquid Swipe Controller
+
+  // final lqController = LiquidController().obs;
+  // RxInt currentPage = 0.obs;
+
+  // onPageChanged(int activePageIndex) {
+  //   currentPage.value = activePageIndex;
+  // }
+
+  // prevPage() {
+  //   int prevPage = lqController.value.currentPage - 1;
+  //   lqController.value.animateToPage(page: prevPage);
+  // }
+  // nextPage() {
+  //   int nextPage = lqController.value.currentPage + 1;
+  //   lqController.value.animateToPage(page: nextPage);
+  // }
 }
+ 

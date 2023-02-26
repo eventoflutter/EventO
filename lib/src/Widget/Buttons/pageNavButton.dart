@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types, must_be_immutable, file_names
 
-
 // Page Navigation Button (Back & Next)
 
 import 'package:final_year_project/src/Widget/Controller/createEventController.dart';
@@ -15,6 +14,7 @@ class pageNavBtn extends StatelessWidget {
     this.left,
     this.right,
     this.text = '',
+    this.color,
   });
 
   final create_Event_Controller controller;
@@ -23,6 +23,7 @@ class pageNavBtn extends StatelessWidget {
   double? left;
   double? right;
   String text;
+  Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,8 @@ class pageNavBtn extends StatelessWidget {
       child: FloatingActionButton(
         onPressed: press,
         heroTag: text,
-        backgroundColor: Colors.white,
+        backgroundColor: color,
+        elevation: 2,
         child: Icon(
           btnicon,
           color: Colors.black,
