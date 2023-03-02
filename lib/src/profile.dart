@@ -1,23 +1,33 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:final_year_project/src/Widget/Controller/createEventController.dart';
 import 'package:final_year_project/src/constants/image_constants.dart';
 import 'package:final_year_project/src/repos/authrepo.dart';
 import 'package:final_year_project/src/updateprofile.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
 import 'Widget/Profile/Profilesetting.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  const Profile({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final create_Event_Controller controller;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {}, icon: const Icon(LineAwesomeIcons.angle_left)),
-        title: Text("Profile", style: Theme.of(context).textTheme.headlineMedium),
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(LineAwesomeIcons.angle_left)),
+        title:
+            Text("Profile", style: Theme.of(context).textTheme.headlineSmall),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(LineAwesomeIcons.moon)),
         ],
@@ -55,15 +65,17 @@ class Profile extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Text("User Name"),
-              const Text("eventooragnizaton@gmail.com"),
+              Text(controller.current_user.username),
+              Text(controller.current_user.email),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: 200,
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => const updateprofile()),
+                    onPressed: () => Get.to(() => updateprofile(
+                          currentUser: controller.current_user,
+                        )),
                     style:
                         ElevatedButton.styleFrom(shape: const StadiumBorder()),
                     child: const Text("Edit Profile",

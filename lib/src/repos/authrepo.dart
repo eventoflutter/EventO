@@ -19,11 +19,11 @@ class authRepository extends GetxController{
   final _auth = FirebaseAuth.instance;
   late Rx<User?> firebaseUser;
   var verId = ''.obs;
-  var logId = ''.obs;
- 
+  var logId = ''.obs; 
 
   @override
-  void onReady() {
+  void onInit() {
+    super.onInit();
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, (User? user) {
@@ -100,7 +100,6 @@ class authRepository extends GetxController{
     if(credentials.user != null){
       usermodel.id = credentials.user?.uid;
 
-      registerUser(usermodel);
     }else{
       Get.back();
     }
@@ -179,8 +178,5 @@ class authRepository extends GetxController{
       }
     }
   }
-
-
-
 
 }

@@ -17,6 +17,12 @@ class create_event_page_1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final usermodel = controller.current_user;
+    String invitorName = usermodel.name != "" ? usermodel.name : usermodel.username;
+
+    controller.invitedBy =  TextEditingController.fromValue(TextEditingValue(text: invitorName));
+    
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 199, 232, 255),
       body: SingleChildScrollView(
@@ -129,9 +135,18 @@ class create_event_page_1 extends StatelessWidget {
                         height: 20,
                       ),
                       inputField(
-                          label: "Location",
-                          ic: LineAwesomeIcons.map_marked,
-                          controller: controller.location)
+                        label: "Location",
+                        ic: LineAwesomeIcons.map_marked,
+                        controller: controller.location
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      inputField(
+                        label: "Invited By",
+                        ic: LineAwesomeIcons.hashtag,
+                        controller: controller.invitedBy,
+                      ),
                     ],
                   ))
                 ],

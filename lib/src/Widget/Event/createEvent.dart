@@ -11,7 +11,12 @@ import 'package:get/get.dart';
 // import 'package:liquid_swipe/liquid_swipe.dart';
 
 class createEvent extends StatefulWidget {
-  const createEvent({super.key});
+  const createEvent({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final create_Event_Controller controller;
 
   @override
   State<createEvent> createState() => _createEventState();
@@ -29,65 +34,73 @@ class _createEventState extends State<createEvent> {
       create_event_page_2(
         controller: controller,
       ),
-      const create_event_page_3(),
+      create_event_page_3(
+        controller: controller,
+      ),
     ];
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          PageView(
-            controller: controller.pageController.value,
-            allowImplicitScrolling: true,
-            physics: const AlwaysScrollableScrollPhysics(),
-            onPageChanged: controller.onPageChanged,
-            children: pages,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              PageView(
+                controller: controller.pageController.value,
+                allowImplicitScrolling: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                onPageChanged: controller.onPageChanged,
+                children: pages,
+              ),
+              Obx(() {
+                bool page = (controller.currentPage.value) != 0;
+                return (page)
+                    ? pageNavBtn(
+                        controller: controller,
+                        btnicon: Icons.navigate_before_rounded,
+                        left: 40,
+                        text: "bckbtn",
+                        press: () {
+                          controller.prevPage();
+                        },
+                        color: Colors.white.withOpacity(0.6),
+                      )
+                    : Container();
+              }),
+              Obx(() {
+                bool page = (controller.currentPage.value) != -1;
+                return (page)
+                    ? pageNavBtn(
+                        controller: controller,
+                        btnicon: Icons.navigate_next_rounded,
+                        right: 40,
+                        text: "nxtbtn",
+                        press: () {
+                          // (controller.currentPage.value) != 1
+                          controller.nextPage();
+                          // : Get.to();
+                        },
+                        color: const Color.fromARGB(255, 104, 159, 255),
+                      )
+                    : Container();
+              }),
+              Positioned(
+                bottom: 60,
+                child: Obx(() {
+                  return Center(
+                    child: AnimatedSmoothIndicator(
+                      activeIndex: controller.currentPage.value,
+                      count: pages.length,
+                      effect: const ExpandingDotsEffect(expansionFactor: 2, dotHeight: 8, activeDotColor: Colors.blueAccent),
+                      // const WormEffect(dotHeight: 8, activeDotColor: Colors.blueAccent),
+                    ),
+                  );
+                }),
+              ),
+            ],
           ),
-          Obx(() {
-            bool page = (controller.currentPage.value) != 0;
-            return (page)
-                ? pageNavBtn(
-                    controller: controller,
-                    btnicon: Icons.navigate_before_rounded,
-                    left: 40,
-                    text: "bckbtn",
-                    press: () {
-                      controller.prevPage();
-                    },
-                    color: Colors.white.withOpacity(0.6),
-                  )
-                : Container();
-          }),
-          Obx(() {
-            bool page = (controller.currentPage.value) != -1;
-            return (page)
-                ? pageNavBtn(
-                    controller: controller,
-                    btnicon: Icons.navigate_next_rounded,
-                    right: 40,
-                    text: "nxtbtn",
-                    press: () {
-                      // (controller.currentPage.value) != 1
-                      controller.nextPage();
-                      // : Get.to();
-                    },
-                    color: const Color.fromARGB(255, 104, 159, 255),
-                  )
-                : Container();
-          }),
-          Positioned(
-            bottom: 60,
-            child: Obx(() {
-              return Center(
-                child: AnimatedSmoothIndicator(
-                  activeIndex: controller.currentPage.value,
-                  count: pages.length,
-                  effect: const ExpandingDotsEffect(expansionFactor: 2, dotHeight: 8, activeDotColor: Colors.blueAccent),
-                  // const WormEffect(dotHeight: 8, activeDotColor: Colors.blueAccent),
-                ),
-              );
-            }),
-          ),
-        ],
+        ),
       ),
     );
   }

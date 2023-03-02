@@ -34,9 +34,9 @@ class inputField extends StatelessWidget {
         size: 26,
         ),
         labelText: label,
-        labelStyle: const TextStyle(color: Colors.black),
+        labelStyle: const TextStyle(color: Color.fromARGB(221, 39, 39, 39)),
         hintText: label,
-        hintStyle: const TextStyle(color: Colors.black),
+        hintStyle: const TextStyle(color: Color.fromARGB(221, 39, 39, 39)),
 
         // border: OutlineInputBorder(
         //     borderRadius: BorderRadius.all(Radius.circular(50)),
