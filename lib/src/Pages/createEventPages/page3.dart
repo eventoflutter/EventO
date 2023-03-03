@@ -206,7 +206,7 @@ class create_event_page_3 extends StatelessWidget {
                                               height: 20,
                                             ),
                                             Text(
-                                              movie['title'],
+                                              controller.startTime.value.text,
                                               style: const TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),

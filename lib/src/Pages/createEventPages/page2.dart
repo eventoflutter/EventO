@@ -38,7 +38,7 @@ class create_event_page_2 extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium?.apply(
                   // color: const Color.fromARGB(255, 138, 138, 138),
                   color: const Color(0xFF686868),
-                  fontWeightDelta: 600,
+                  fontWeightDelta: 500,
                   shadows: [
                     Shadow(
                         color: Colors.black.withOpacity(0.3),

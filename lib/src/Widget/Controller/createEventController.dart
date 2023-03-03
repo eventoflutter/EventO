@@ -1,6 +1,9 @@
 // ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
 
+import 'dart:typed_data';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:final_year_project/src/models/usermodel.dart';
 import 'package:final_year_project/src/repos/currentUser.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,7 @@ import 'package:get/get.dart';
 // import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
 
 class create_Event_Controller extends GetxController {
-  // static create_Event_Controller get instance => Get.find();
+  static create_Event_Controller get instance => Get.find();
 
   static String invitor_name = "dfgd";
 
@@ -41,7 +44,8 @@ class create_Event_Controller extends GetxController {
   final desc = TextEditingController();
   final startTime = TextEditingController().obs;
   final location = TextEditingController();
-  TextEditingController invitedBy = TextEditingController.fromValue(TextEditingValue(text: invitor_name));
+  TextEditingController invitedBy =
+      TextEditingController.fromValue(TextEditingValue(text: invitor_name));
   late DateTime date_time;
 
   // Page 2
@@ -64,19 +68,20 @@ class create_Event_Controller extends GetxController {
 
   final CarouselController carouselController = CarouselController();
 
-  // create_Event_Controller() {
-  //   final user_instance = Get.put(currentUser());
+  // Page 4
 
-  //   final userdata = user_instance.user;
+  RxBool sendOnWhatsApp = true.obs;
+  RxBool sendOnEmail = false.obs;
 
-  //   final name = userdata.name != "" ? userdata.name : userdata.username;
+  RxBool dataFileSelected = false.obs;
 
-  //   invitedBy.value = TextEditingValue(text: name);
-  // }
+  Rx<PlatformFile> dataFile = PlatformFile(name: "", size: 0).obs;
 
-  // set invitor(val) => invitor_name = val;
+  RxBool registrationForm = false.obs;
 
-  // set invitor_edit(val) => invitedBy = val;
+  registrationFormData formFeilds = registrationFormData();
+
+  // Current User
 
   Future<String> getUser() async {
     final user_instance = Get.put(currentUser());
@@ -85,22 +90,11 @@ class create_Event_Controller extends GetxController {
 
     return "Done";
   }
+}
 
-  // Liquid Swipe Controller
-
-  // final lqController = LiquidController().obs;
-  // RxInt currentPage = 0.obs;
-
-  // onPageChanged(int activePageIndex) {
-  //   currentPage.value = activePageIndex;
-  // }
-
-  // prevPage() {
-  //   int prevPage = lqController.value.currentPage - 1;
-  //   lqController.value.animateToPage(page: prevPage);
-  // }
-  // nextPage() {
-  //   int nextPage = lqController.value.currentPage + 1;
-  //   lqController.value.animateToPage(page: nextPage);
-  // }
+class registrationFormData {
+  RxBool isName = false.obs;
+  RxBool isEmail = false.obs;
+  RxBool isPhone = true.obs;
+  RxBool isAddress = false.obs;
 }

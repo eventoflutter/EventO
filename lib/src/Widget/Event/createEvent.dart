@@ -3,6 +3,7 @@
 import 'package:final_year_project/src/Pages/createEventPages/page1.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page2.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page3.dart';
+import 'package:final_year_project/src/Pages/createEventPages/page4.dart';
 import 'package:final_year_project/src/Widget/Buttons/pageNavButton.dart';
 import 'package:final_year_project/src/Widget/Controller/createEventController.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -37,6 +38,9 @@ class _createEventState extends State<createEvent> {
       create_event_page_3(
         controller: controller,
       ),
+      create_event_page_4(
+        controller: controller
+      ),
     ];
     return Scaffold(
       body: SingleChildScrollView(
@@ -69,7 +73,7 @@ class _createEventState extends State<createEvent> {
                     : Container();
               }),
               Obx(() {
-                bool page = (controller.currentPage.value) != -1;
+                bool page = (controller.currentPage.value) != pages.length - 1;
                 return (page)
                     ? pageNavBtn(
                         controller: controller,
@@ -92,7 +96,10 @@ class _createEventState extends State<createEvent> {
                     child: AnimatedSmoothIndicator(
                       activeIndex: controller.currentPage.value,
                       count: pages.length,
-                      effect: const ExpandingDotsEffect(expansionFactor: 2, dotHeight: 8, activeDotColor: Colors.blueAccent),
+                      effect: const ExpandingDotsEffect(
+                          expansionFactor: 2,
+                          dotHeight: 8,
+                          activeDotColor: Colors.blueAccent),
                       // const WormEffect(dotHeight: 8, activeDotColor: Colors.blueAccent),
                     ),
                   );
