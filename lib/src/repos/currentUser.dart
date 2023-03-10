@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class currentUser extends GetxController {
-
   // currentUser() {
   //   create();
   // }
@@ -16,12 +15,21 @@ class currentUser extends GetxController {
     final auth = FirebaseAuth.instance;
     final Rx<User?> firebaseUser = Rx<User?>(auth.currentUser);
 
-    final snapshot = await db
-        .collection("Users")
-        .where("Uid", isEqualTo: firebaseUser.value?.uid)
-        .get();
+    if (firebaseUser.value != null) {
+      final snapshot = await db
+          .collection("Users")
+          .where("Uid", isEqualTo: firebaseUser.value?.uid)
+          .get();
 
-    return snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
+      return snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
+    } else {
+      return UserModel(
+          username: "username",
+          email: "email",
+          name: "name",
+          phonenumber: "phonenumber",
+          password: "password"
+          );
+    }
   }
-
 }

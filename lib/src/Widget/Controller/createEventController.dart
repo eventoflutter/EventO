@@ -1,11 +1,10 @@
 // ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
 
-import 'dart:typed_data';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:final_year_project/src/models/usermodel.dart';
 import 'package:final_year_project/src/repos/currentUser.dart';
+import 'package:final_year_project/src/repos/registerEvent.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
@@ -65,6 +64,7 @@ class create_Event_Controller extends GetxController {
   RxInt current_temp = 0.obs;
   RxInt sel_ind = 0.obs;
   dynamic selectedIndex = {}.obs;
+  String templateId = "";
 
   final CarouselController carouselController = CarouselController();
 
@@ -89,6 +89,14 @@ class create_Event_Controller extends GetxController {
     current_user = await user_instance.create();
 
     return "Done";
+  }
+
+  // Final Create Event
+  Future<String> createEvent(create_Event_Controller controller) async {
+    final registerObj = Get.put(registerEvent());
+    String eventId = await registerObj.register(controller);
+
+    return eventId;
   }
 }
 

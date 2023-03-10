@@ -15,23 +15,27 @@ class create_event_page_3 extends StatelessWidget {
 
   final create_Event_Controller controller;
 
-  final List<dynamic> _products = [
+  final List<dynamic> templates = [
     {
+      'Id': 'Template_1',
       'title': 'Adidas Originals \nby Alexander Wang',
       'image': 'assets/images/card_demo_1.jpg',
       'description': 'Limited collection'
     },
     {
+      'Id': 'Template_2',
       'title': 'Adidas Originals \nby Alexander Wang',
       'image': 'assets/images/card_demo_2.jpg',
       'description': 'Limited collection'
     },
     {
+      'Id': 'Template_3',
       'title': 'Adidas Originals \nby Alexander Wang',
       'image': 'assets/images/card_demo_3.jpg',
       'description': 'Limited collection'
     },
     {
+      'Id': 'Template_4',
       'title': 'Adidas Originals \nby Alexander Wang',
       'image': 'assets/images/card_demo_4.jpg',
       'description': 'Limited collection'
@@ -44,7 +48,7 @@ class create_event_page_3 extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
 
     controller.sel_ind.value = -1;
-    
+
     return Scaffold(
       body: Column(
         children: [
@@ -55,7 +59,7 @@ class create_event_page_3 extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Image.asset(
-                    _products[controller.current_temp.value]['image'],
+                    templates[controller.current_temp.value]['image'],
                     fit: BoxFit.fitHeight,
                     colorBlendMode: BlendMode.colorDodge,
                     filterQuality: FilterQuality.high,
@@ -100,7 +104,7 @@ class create_event_page_3 extends StatelessWidget {
                                 onPageChanged: (index, reason) {
                                   controller.current_temp.value = index;
                                 }),
-                            items: _products.map((movie) {
+                            items: templates.map((element) {
                               return Builder(
                                 builder: (BuildContext context) {
                                   return GestureDetector(
@@ -109,13 +113,15 @@ class create_event_page_3 extends StatelessWidget {
                                           controller.sel_ind.value) {
                                         controller.sel_ind.value =
                                             controller.current_temp.value;
+                                        controller.templateId = element['Id'];
                                       } else {
                                         controller.sel_ind.value = -1;
+                                        controller.templateId = "";
                                       }
-                                      if (controller.selectedIndex == movie) {
+                                      if (controller.selectedIndex == element) {
                                         controller.selectedIndex = {};
                                       } else {
-                                        controller.selectedIndex = movie;
+                                        controller.selectedIndex = element;
                                       }
                                     },
                                     child: AnimatedContainer(
@@ -127,13 +133,13 @@ class create_event_page_3 extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           border: controller.selectedIndex ==
-                                                  movie
+                                                  element
                                               ? Border.all(
                                                   color: Colors.blue.shade500,
                                                   width: 3)
                                               : null,
                                           boxShadow: controller.selectedIndex ==
-                                                  movie
+                                                  element
                                               ? [
                                                   BoxShadow(
                                                       color:
@@ -168,13 +174,13 @@ class create_event_page_3 extends StatelessWidget {
                                                 alignment: Alignment.center,
                                                 children: [
                                                   Image.asset(
-                                                    movie['image'],
+                                                    element['image'],
                                                     fit: BoxFit.cover,
                                                     height: 320,
                                                     width: double.maxFinite,
                                                   ),
                                                   controller.selectedIndex ==
-                                                          movie
+                                                          element
                                                       ? const Positioned(
                                                           top: 20,
                                                           right: 20,
@@ -215,7 +221,7 @@ class create_event_page_3 extends StatelessWidget {
                                               height: 20,
                                             ),
                                             Text(
-                                              movie['description'],
+                                              element['description'],
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.grey.shade600),
@@ -235,7 +241,7 @@ class create_event_page_3 extends StatelessWidget {
                       bottom: 5,
                       child: AnimatedSmoothIndicator(
                         activeIndex: controller.current_temp.value,
-                        count: _products.length,
+                        count: templates.length,
                         effect: const JumpingDotEffect(
                             dotWidth: 8,
                             dotHeight: 8,

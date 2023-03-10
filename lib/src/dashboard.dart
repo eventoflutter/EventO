@@ -71,7 +71,9 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                     IconButton(
                         onPressed: () {
                           //authRepository.instance.logout();
-                          Get.to(() => Profile(controller: controller,));
+                          Get.to(() => Profile(
+                                controller: controller,
+                              ));
                         },
                         icon: const Icon(
                           Icons.person_outline_outlined,
@@ -119,8 +121,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                             ),
                             itemLabel: 'Page 2',
                           ),
-
-                          ///svg example
                           // ignore: prefer_const_constructors
                           BottomBarItem(
                             inActiveItem: const Icon(
@@ -136,7 +136,10 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                                     left: -16,
                                     child: IconButton(
                                       onPressed: () {
-                                        Get.to(createEvent(controller: controller,),
+                                        Get.to(
+                                            () => createEvent(
+                                                  controller: controller,
+                                                ),
                                             transition:
                                                 Transition.cupertinoDialog,
                                             curve: Curves.ease,

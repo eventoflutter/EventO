@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel{
-  String? id;
+  String id = "";
   final String username;
   final String name;
   final String email;
@@ -24,6 +24,7 @@ class UserModel{
       "Email" : email,
       "Phone" : phonenumber,
       "Password" : password,
+      "EventsCreated" : []
     };
   }
 

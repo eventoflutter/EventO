@@ -4,6 +4,7 @@ import 'package:final_year_project/src/Pages/createEventPages/page1.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page2.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page3.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page4.dart';
+import 'package:final_year_project/src/Pages/createEventPages/page5.dart';
 import 'package:final_year_project/src/Widget/Buttons/pageNavButton.dart';
 import 'package:final_year_project/src/Widget/Controller/createEventController.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -87,7 +88,20 @@ class _createEventState extends State<createEvent> {
                         },
                         color: const Color.fromARGB(255, 104, 159, 255),
                       )
-                    : Container();
+                    : pageNavBtn(
+                        controller: controller,
+                        btnicon: Icons.navigate_next_rounded,
+                        right: 40,
+                        text: "nxtbtn",
+                        press: () {
+                          Get.to(
+                            create_event_page_5(controller: controller),
+                            transition: Transition.leftToRightWithFade,
+                            curve: Curves.ease
+                          );
+                        },
+                        color: const Color.fromARGB(255, 104, 159, 255),
+                      );
               }),
               Positioned(
                 bottom: 60,

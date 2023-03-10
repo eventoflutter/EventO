@@ -10,8 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class authRepository extends GetxController{
-
+class authRepository extends GetxController {
   static authRepository get instance => Get.find();
 
   final _db = FirebaseFirestore.instance;
@@ -19,7 +18,7 @@ class authRepository extends GetxController{
   final _auth = FirebaseAuth.instance;
   late Rx<User?> firebaseUser;
   var verId = ''.obs;
-  var logId = ''.obs; 
+  var logId = ''.obs;
 
   @override
   void onInit() {
@@ -27,49 +26,55 @@ class authRepository extends GetxController{
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, (User? user) {
-      user != null ? Get.offAll(() => const Dashboard()) : Get.offAll(() => const WelcomePage());
+      user != null
+          ? Get.offAll(() => const Dashboard())
+          : Get.offAll(() => const WelcomePage());
     });
   }
 
   Future<void> phoneAuth(controller) async {
-
-     int? resendToken;
+    int? resendToken;
 
     String username = controller.username.text.trim();
     String email = controller.email.text.trim();
     String number = "+91${controller.phoneno.text.trim()}";
     String password = controller.password.text.trim();
 
-    UserModel usermodel = UserModel(username: username, email: email, name: "", phonenumber: number, password: password);
+    UserModel usermodel = UserModel(
+        username: username,
+        email: email,
+        name: "",
+        phonenumber: number,
+        password: password);
 
     //print("number: $number");
     await _auth.verifyPhoneNumber(
       phoneNumber: number,
-      timeout: const Duration(seconds : 20),
+      timeout: const Duration(seconds: 20),
       verificationCompleted: (credentials) async {
         var creds = await _auth.signInWithCredential(credentials);
 
-        if(creds.user != null){
-          usermodel.id = creds.user?.uid;
+        if (creds.user != null) {
+          usermodel.id = creds.user!.uid;
           registerUser(usermodel);
-        }
-        else{
+        } else {
           Get.back();
         }
-        
-      }, 
+      },
       verificationFailed: (e) {
-        if(e.code == 'invalid-phone-number'){
+        if (e.code == 'invalid-phone-number') {
           Get.snackbar('Error', 'Invalid number provided.');
-        }else{
+        } else {
           Get.snackbar('Error', e.code);
         }
-      }, 
+      },
       codeSent: (verificationId, resendToken) {
         verId.value = verificationId;
-        Get.to(() => Otpscreen(usermodel: usermodel),arguments: [{'data' : number, 'type': 'signup'}]);
+        Get.to(() => Otpscreen(usermodel: usermodel), arguments: [
+          {'data': number, 'type': 'signup'}
+        ]);
         resendToken = resendToken;
-      }, 
+      },
       codeAutoRetrievalTimeout: (verificationId) {
         verId.value = verificationId;
       },
@@ -78,98 +83,112 @@ class authRepository extends GetxController{
   }
 
   Future<void> verifyOTP(String otp, UserModel usermodel) async {
-    var credentials = await _auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: verId.value, smsCode: otp));
+    var credentials = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            verificationId: verId.value, smsCode: otp));
 
     // return credentials.user != null ? true : false;
 
-    if(credentials.user != null){
-      usermodel.id = credentials.user?.uid;
+    if (credentials.user != null) {
+      usermodel.id = credentials.user!.uid;
 
       registerUser(usermodel);
-    }else{
+    } else {
       Get.back();
     }
-    
   }
 
   Future<void> verifyLogin(String otp, UserModel usermodel) async {
-    var credentials = await _auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: logId.value, smsCode: otp));
+    var credentials = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            verificationId: logId.value, smsCode: otp));
 
     // return credentials.user != null ? true : false;
 
-    if(credentials.user != null){
-      usermodel.id = credentials.user?.uid;
-
-    }else{
+    if (credentials.user != null) {
+      usermodel.id = credentials.user!.uid;
+    } else {
       Get.back();
     }
-    
   }
 
   Future<void> logout() async => await _auth.signOut();
 
   void registerUser(UserModel usermodel) async {
+    var data = usermodel.toJson();
 
-      await _db.collection("Users").add(usermodel.toJson()).whenComplete(() {
-        Get.offAll(const Dashboard());
-        Get.snackbar("Success", "Account has been created", 
-          snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.green,
-          backgroundColor: Colors.green.withOpacity(0.1),
-        );
-      });
-
+    await _db
+          .collection("Users")
+          .doc(data["Uid"])
+          .set(data)
+          .then((value){
+            Get.offAll(const Dashboard());
+            Get.snackbar(
+              "Success",
+              "Account has been created",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.green,
+              backgroundColor: Colors.green.withOpacity(0.1),
+            );
+          });
   }
 
-  Future<void> login(controller) async {
+  
 
-     int? resendToken;
+  Future<void> login(controller) async {
+    int? resendToken;
 
     String email = controller.email.text.trim();
     String password = controller.password.text.trim();
 
-    final snapshot = await _db.collection("Users").where("Email", isEqualTo: email).get();
+    final snapshot =
+        await _db.collection("Users").where("Email", isEqualTo: email).get();
 
-    if(snapshot.docs.isEmpty){
-      Get.snackbar("Error", "No such account exists!!",
+    if (snapshot.docs.isEmpty) {
+      Get.snackbar(
+        "Error",
+        "No such account exists!!",
         colorText: Colors.redAccent,
         backgroundColor: Colors.redAccent.withOpacity(0.1),
         snackPosition: SnackPosition.TOP,
       );
-    }else{
+    } else {
+      final userData =
+          snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
 
-      final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
-
-      if(password == userData.password){
+      if (password == userData.password) {
         await _auth.verifyPhoneNumber(
           phoneNumber: userData.phonenumber,
-          timeout: const Duration(seconds : 20),
+          timeout: const Duration(seconds: 20),
           verificationCompleted: (credentials) async {
             var creds = await _auth.signInWithCredential(credentials);
 
-            if(creds.user != null){
-              Get.snackbar("Success", "${userData.username} LoggedIn!!!", 
+            if (creds.user != null) {
+              Get.snackbar(
+                "Success",
+                "${userData.username} LoggedIn!!!",
                 snackPosition: SnackPosition.BOTTOM,
                 colorText: Colors.green,
                 backgroundColor: Colors.green.withOpacity(0.1),
               );
-            }
-            else{
+            } else {
               Get.back();
-            }            
-          }, 
+            }
+          },
           verificationFailed: (e) {
-            if(e.code == 'invalid-phone-number'){
+            if (e.code == 'invalid-phone-number') {
               Get.snackbar('Error', 'Invalid number provided.');
-            }else{
+            } else {
               Get.snackbar('Error', e.code);
             }
-          },  
+          },
           codeSent: (verificationId, resendToken) {
             logId.value = verificationId;
-            Get.to(() => Otpscreen(usermodel: userData),arguments: [{'data' : userData.phonenumber, 'type' : "login"}]);
+            Get.to(() => Otpscreen(usermodel: userData), arguments: [
+              {'data': userData.phonenumber, 'type': "login"}
+            ]);
             resendToken = resendToken;
-          }, 
+          },
           codeAutoRetrievalTimeout: (verificationId) {
             logId.value = verificationId;
           },
@@ -178,5 +197,4 @@ class authRepository extends GetxController{
       }
     }
   }
-
 }
