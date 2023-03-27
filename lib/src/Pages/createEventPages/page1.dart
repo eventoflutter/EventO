@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, must_be_immutable
 
 import 'package:final_year_project/src/Widget/Buttons/backbutton.dart';
 import 'package:final_year_project/src/Widget/Controller/createEventController.dart';
@@ -8,19 +8,19 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class create_event_page_1 extends StatelessWidget {
-  const create_event_page_1({
+  create_event_page_1({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   final create_Event_Controller controller;
-
+  String invitorName = "";
   @override
   Widget build(BuildContext context) {
 
     final usermodel = controller.current_user;
-    String invitorName = usermodel.name != "" ? usermodel.name : usermodel.username;
-
+    invitorName = invitorName == "" ? (usermodel.name != "" ? usermodel.name : usermodel.username) : controller.invitedBy.value.text;
+    
     controller.invitedBy =  TextEditingController.fromValue(TextEditingValue(text: invitorName));
     
     return Scaffold(

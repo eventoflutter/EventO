@@ -26,7 +26,9 @@ class registerEvent extends GetxController {
         formName: controller.formFeilds.isName.value,
         formWhatsApp: controller.formFeilds.isPhone.value,
         formEmail: controller.formFeilds.isEmail.value,
-        formAddress: controller.formFeilds.isAddress.value);
+        formAddress: controller.formFeilds.isAddress.value,
+        invitedBy: controller.invitedBy.value.text,
+      );
 
     String eventId = "";
 

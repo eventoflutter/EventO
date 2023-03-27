@@ -26,13 +26,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
   final controller = Get.put(create_Event_Controller());
 
   /// widget list
-  final List<Widget> bottomBarPages = [
-    const Page1(),
-    const Page2(),
-    const eventlist(),
-    const Page4(),
-    const Page5(),
-  ];
+
 
   @override
   void dispose() {
@@ -51,6 +45,14 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
+
+            final List<Widget> bottomBarPages = [
+              const Page1(),
+              const Page2(),
+              eventlist(current_user: controller.current_user),
+              const Page4(),
+              const Page5(),
+            ];
             return SafeArea(
               child: Scaffold(
                 appBar: AppBar(
@@ -121,7 +123,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
                             ),
                             itemLabel: 'Page 2',
                           ),
-                          // ignore: prefer_const_constructors
                           BottomBarItem(
                             inActiveItem: const Icon(
                               Icons.add,

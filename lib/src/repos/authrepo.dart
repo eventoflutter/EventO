@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/src/Widget/otpwidgets/otpscreen.dart';
 import 'package:final_year_project/src/dashboard.dart';
 import 'package:final_year_project/src/models/usermodel.dart';
-// import 'package:final_year_project/src/repos/signupexception.dart';
 import 'package:final_year_project/src/welcomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -25,7 +25,8 @@ class create_event_page_5 extends StatelessWidget {
           if (snapshot.hasData) {
             final eventId = snapshot.data as String;
 
-            final formURI = Uri.https('theevento.live', 'EventForm', {'eventid' : eventId});
+            final formURI =
+                Uri.https('theevento.live', 'EventForm', {'eventid': eventId});
 
             return Scaffold(
               body: Container(
@@ -36,15 +37,21 @@ class create_event_page_5 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      height: 160,
-                      width: 160,
+                      height: 185,
+                      width: 185,
+                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            colors: [Color.fromARGB(255, 169, 251, 217), Color.fromARGB(255, 9, 230, 112)],
+                        gradient: LinearGradient(
+                            colors: [
+                              const Color.fromARGB(255, 169, 251, 217)
+                                  .withOpacity(0.3),
+                              const Color.fromARGB(255, 9, 230, 112)
+                                  .withOpacity(0.3)
+                            ],
                             begin: Alignment.topLeft,
-                            end: Alignment.bottomRight
-                          ),
-                        borderRadius: const BorderRadius.all(Radius.circular(80)),
+                            end: Alignment.bottomRight),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(95)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0),
@@ -54,16 +61,65 @@ class create_event_page_5 extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: Icon(
-                        Icons.check, 
-                        color: Theme.of(context).scaffoldBackgroundColor, 
-                        size: 90,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black.withOpacity(0.25),
-                            blurRadius: 35,
-                          )
-                        ],
+                      child: Container(
+                        height: 175,
+                        width: 175,
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                                const Color.fromARGB(255, 169, 251, 217)
+                                    .withOpacity(0.6),
+                                const Color.fromARGB(255, 9, 230, 112)
+                                    .withOpacity(0.6)
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(90)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0),
+                              offset: const Offset(20, 200),
+                              spreadRadius: 20,
+                              blurRadius: 20,
+                            )
+                          ],
+                        ),
+                        child: Container(
+                          height: 160,
+                          width: 160,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 169, 251, 217),
+                                  Color.fromARGB(255, 9, 230, 112)
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(80)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0),
+                                offset: const Offset(20, 200),
+                                spreadRadius: 20,
+                                blurRadius: 20,
+                              )
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.check,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            size: 90,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black.withOpacity(0.25),
+                                blurRadius: 35,
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     Container(
@@ -71,16 +127,14 @@ class create_event_page_5 extends StatelessWidget {
                       width: 160,
                       margin: const EdgeInsets.only(top: 10, bottom: 20),
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.45),
-                            offset: const Offset(0, 0),
-                            blurRadius: 30
-                          )
-                        ]
-                      ),
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.45),
+                                offset: const Offset(0, 0),
+                                blurRadius: 30)
+                          ]),
                     ),
                     Container(
                       margin: const EdgeInsets.only(bottom: 50),
@@ -92,18 +146,23 @@ class create_event_page_5 extends StatelessWidget {
                           ),
                           RichText(
                             text: TextSpan(
-                              text: "Your Event ",
-                              style: Theme.of(context).textTheme.headlineLarge?.apply(fontSizeFactor: 0.4, color: Colors.grey),
-                              children: [
-                                TextSpan(
-                                  text: controller.eventName.value.text,
-                                  style: const TextStyle(color: Color.fromARGB(255, 9, 230, 112)),
-                                ),
-                                const TextSpan(
-                                  text: " has been successfully created."
-                                )
-                              ]
-                            ),
+                                text: "Your Event ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge
+                                    ?.apply(
+                                        fontSizeFactor: 0.4,
+                                        color: Colors.grey),
+                                children: [
+                                  TextSpan(
+                                    text: controller.eventName.value.text,
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 9, 230, 112)),
+                                  ),
+                                  const TextSpan(
+                                      text: " has been successfully created.")
+                                ]),
                             textAlign: TextAlign.center,
                             softWrap: true,
                           ),
@@ -113,21 +172,24 @@ class create_event_page_5 extends StatelessWidget {
                     if (controller.registrationForm.value)
                       GestureDetector(
                         onTap: () {
-                          Clipboard.setData(ClipboardData(text: formURI.toString())).then((value) => {
-                            isCopied = true,
-                            Fluttertoast.showToast(
-                              msg: "URL Copied",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black.withOpacity(0.6),
-                              textColor: Colors.white,
-                              fontSize: 16.0
-                            )
-                          });
+                          Clipboard.setData(
+                                  ClipboardData(text: formURI.toString()))
+                              .then((value) => {
+                                    isCopied = true,
+                                    Fluttertoast.showToast(
+                                        msg: "URL Copied",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor:
+                                            Colors.black.withOpacity(0.6),
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                  });
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
                           margin: const EdgeInsets.only(bottom: 30),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -138,7 +200,13 @@ class create_event_page_5 extends StatelessWidget {
                             children: [
                               Text(
                                 "Copy Form URL ",
-                                style: Theme.of(context).textTheme.headlineLarge?.apply(fontSizeFactor: 0.5, color: const Color.fromARGB(255, 101, 157, 255)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge
+                                    ?.apply(
+                                        fontSizeFactor: 0.5,
+                                        color: const Color.fromARGB(
+                                            255, 101, 157, 255)),
                               ),
                               const Icon(
                                 Icons.copy_rounded,
@@ -150,22 +218,23 @@ class create_event_page_5 extends StatelessWidget {
                       ),
                     GestureDetector(
                       onTap: () {
-                        if(controller.registrationForm.value && !isCopied) {
-                          
-                          Clipboard.setData(ClipboardData(text: formURI.toString())).then((value) => {
-                            isCopied = true,
-                            Fluttertoast.showToast(
-                              msg: "URL Copied",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black.withOpacity(0.6),
-                              textColor: Colors.white,
-                              fontSize: 16.0
-                            )
-                          });
-                        }
-                        Get.to(() => const Dashboard());
+                          if (controller.registrationForm.value && !isCopied) {
+                            Clipboard.setData(
+                                    ClipboardData(text: formURI.toString()))
+                                .then((value) => {
+                                      isCopied = true,
+                                      Fluttertoast.showToast(
+                                          msg: "URL Copied",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              Colors.black.withOpacity(0.6),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0)
+                                    });
+                          }
+                          Get.offAll(() => const Dashboard());
                       },
                       child: Container(
                         height: 60,
@@ -173,11 +242,14 @@ class create_event_page_5 extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                              colors: [Color.fromARGB(255, 169, 251, 217), Color.fromARGB(255, 29, 233, 124)],
+                              colors: [
+                                Color.fromARGB(255, 169, 251, 217),
+                                Color.fromARGB(255, 29, 233, 124)
+                              ],
                               begin: Alignment.topLeft,
-                              end: Alignment.bottomCenter
-                            ),
-                          borderRadius: const BorderRadius.all(Radius.circular(80)),
+                              end: Alignment.bottomCenter),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(80)),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.1),
@@ -188,8 +260,14 @@ class create_event_page_5 extends StatelessWidget {
                           ],
                         ),
                         child: Text(
-                          "Done", 
-                          style: Theme.of(context).textTheme.headlineLarge?.apply(color: Theme.of(context).scaffoldBackgroundColor, fontSizeFactor: 0.45), 
+                          "Done",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.apply(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  fontSizeFactor: 0.45),
                           // shadows: [
                           //   Shadow(
                           //     color: Colors.black.withOpacity(0.25),
@@ -209,7 +287,6 @@ class create_event_page_5 extends StatelessWidget {
         return const Scaffold(
           body: Center(child: CircularProgressIndicator()),
         );
-
       }),
       future: controller.createEvent(controller),
     );

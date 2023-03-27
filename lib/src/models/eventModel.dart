@@ -1,5 +1,6 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, non_constant_identifier_names
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Event {
   final String admin;
@@ -19,6 +20,8 @@ class Event {
   final bool formWhatsApp;
   final bool formEmail;
   final bool formAddress;
+  final String invitedBy;
+  final String Status;
 
   Event({
     required this.admin,
@@ -38,6 +41,8 @@ class Event {
     required this.formWhatsApp,
     required this.formEmail,
     required this.formAddress,
+    required this.invitedBy,
+    this.Status = "upcoming",
   });
 
   toJson() {
@@ -59,31 +64,37 @@ class Event {
       "FormMobile": formWhatsApp,
       "FormEmail": formEmail,
       "FormAddress": formAddress,
+      "InvitedBy": invitedBy,
+      "Status": Status,
     };
   }
 
   factory Event.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
 
+    DateTime st = data["StartTime"].toDate();
+
     Event event = Event(
-        admin: data["Admin"],
-        eventName: data["EventName"],
-        description: data["Description"],
-        startTime: data["StartTime"],
-        location: data["Location"],
-        qrEnable: data["IsQr"],
-        noOfScans: data["Scans"],
-        templateId: data["TemplateId"],
-        sendOnWhatsApp: data["SendOnWhatsApp"],
-        sendOnEmail: data["SendOnEmail"],
-        dataFile: data["IsDataFile"],
-        dataFileName: data["FileName"],
-        registrationForm: data["IsForm"],
-        formName: data["FormName"],
-        formWhatsApp: data["FormMobile"],
-        formEmail: data["FormEmail"],
-        formAddress: data["FormAddress"]
-      );
+      admin: data["Admin"],
+      eventName: data["EventName"],
+      description: data["Description"],
+      startTime: DateFormat('d/MMM/y | h:mm a').format(st),
+      location: data["Location"],
+      qrEnable: data["IsQr"],
+      noOfScans: data["Scans"],
+      templateId: data["TemplateId"],
+      sendOnWhatsApp: data["SendOnWhatsApp"],
+      sendOnEmail: data["SendOnEmail"],
+      dataFile: data["IsDataFile"],
+      dataFileName: data["FileName"],
+      registrationForm: data["IsForm"],
+      formName: data["FormName"],
+      formWhatsApp: data["FormMobile"],
+      formEmail: data["FormEmail"],
+      formAddress: data["FormAddress"],
+      invitedBy: data["InvitedBy"],
+      Status: data["Status"],
+    );
 
     return event;
   }

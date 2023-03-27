@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, file_names, must_be_immutable
 
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page1.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page2.dart';
 import 'package:final_year_project/src/Pages/createEventPages/page3.dart';
@@ -39,9 +40,7 @@ class _createEventState extends State<createEvent> {
       create_event_page_3(
         controller: controller,
       ),
-      create_event_page_4(
-        controller: controller
-      ),
+      create_event_page_4(controller: controller),
     ];
     return Scaffold(
       body: SingleChildScrollView(
@@ -93,12 +92,17 @@ class _createEventState extends State<createEvent> {
                         btnicon: Icons.navigate_next_rounded,
                         right: 40,
                         text: "nxtbtn",
-                        press: () {
-                          Get.to(
-                            create_event_page_5(controller: controller),
-                            transition: Transition.leftToRightWithFade,
-                            curve: Curves.ease
-                          );
+                        press: () async {
+                          // ignore: use_build_context_synchronously
+                          if (await confirm(
+                            context,
+                            title: const Text("Do you want to create Event?"),
+                          )) {
+                            Get.to(
+                                () => create_event_page_5(controller: controller),
+                                transition: Transition.leftToRightWithFade,
+                                curve: Curves.ease);
+                          }
                         },
                         color: const Color.fromARGB(255, 104, 159, 255),
                       );

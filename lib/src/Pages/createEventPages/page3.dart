@@ -1,51 +1,123 @@
 // ignore_for_file: library_private_types_in_public_api, camel_case_types, non_constant_identifier_names
 
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_year_project/src/Widget/Buttons/carouselbtn.dart';
+import 'package:final_year_project/src/Widget/Card_Template/template_1.dart';
 import 'package:final_year_project/src/Widget/Controller/createEventController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class create_event_page_3 extends StatelessWidget {
-  create_event_page_3({
+  const create_event_page_3({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   final create_Event_Controller controller;
 
-  final List<dynamic> templates = [
-    {
-      'Id': 'Template_1',
-      'title': 'Adidas Originals \nby Alexander Wang',
-      'image': 'assets/images/card_demo_1.jpg',
-      'description': 'Limited collection'
-    },
-    {
-      'Id': 'Template_2',
-      'title': 'Adidas Originals \nby Alexander Wang',
-      'image': 'assets/images/card_demo_2.jpg',
-      'description': 'Limited collection'
-    },
-    {
-      'Id': 'Template_3',
-      'title': 'Adidas Originals \nby Alexander Wang',
-      'image': 'assets/images/card_demo_3.jpg',
-      'description': 'Limited collection'
-    },
-    {
-      'Id': 'Template_4',
-      'title': 'Adidas Originals \nby Alexander Wang',
-      'image': 'assets/images/card_demo_4.jpg',
-      'description': 'Limited collection'
-    }
-  ];
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
+    final List<dynamic> templates = [
+      {
+        'Id': 'Template_1',
+        'template': Template_1(
+          height: 555, 
+          width: (9/16)* 555, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+        'background': Template_1(
+          height: 800, 
+          width: (9/16)* 800, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+      },
+      {
+        'Id': 'Template_2',
+        'template': Template_1(
+          height: 555, 
+          width: (9/16)* 555, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+        'background': Template_1(
+          height: 800, 
+          width: (9/16)* 800, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+      },
+      {
+        'Id': 'Template_3',
+        'template': Template_1(
+          height: 555, 
+          width: (9/16)* 555, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+        'background': Template_1(
+          height: 800, 
+          width: (9/16)* 800, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+      },
+      {
+        'Id': 'Template_4',
+        'template': Template_1(
+          height: 555, 
+          width: (9/16)* 555, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+        'background': Template_1(
+          height: 800, 
+          width: (9/16)* 800, 
+          date: controller.date_time,
+          invitedBy: controller.invitedBy.value.text,
+          eventName: controller.eventName.value.text,
+          address: controller.location.value.text,
+          isQR: controller.qrEnable!.value,
+          scans: controller.scans.value,
+        ),
+      }
+    ];
 
     controller.sel_ind.value = -1;
 
@@ -58,12 +130,26 @@ class create_event_page_3 extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Image.asset(
-                    templates[controller.current_temp.value]['image'],
-                    fit: BoxFit.fitHeight,
-                    colorBlendMode: BlendMode.colorDodge,
-                    filterQuality: FilterQuality.high,
-                    height: height * 0.75,
+                  // Image.asset(
+                  //   templates[controller.current_temp.value]['image'],
+                  //   fit: BoxFit.fitHeight,
+                  //   colorBlendMode: BlendMode.colorDodge,
+                  //   filterQuality: FilterQuality.high,
+                  //   height: height * 0.75,
+                  // ),
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    width: width,
+                    child: templates[controller.current_temp.value]['background'],
+                  ),
+                  Positioned.fill(
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(
+                        sigmaX: 20,
+                        sigmaY: 20,
+                      )
+                      ),
                   ),
                   SizedBox(
                     height: height * 0.75,
@@ -90,7 +176,7 @@ class create_event_page_3 extends StatelessWidget {
                             options: CarouselOptions(
                                 height: 450.0,
                                 aspectRatio: 16 / 9,
-                                viewportFraction: 0.70,
+                                viewportFraction: 0.75,
                                 enlargeCenterPage: true,
                                 pageSnapping: true,
                                 autoPlay: (controller.sel_ind.value == -1)
@@ -125,109 +211,63 @@ class create_event_page_3 extends StatelessWidget {
                                       }
                                     },
                                     child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 300),
+                                      duration: const Duration(milliseconds: 300),
                                       width: MediaQuery.of(context).size.width,
+                                      clipBehavior: Clip.hardEdge,
                                       decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border: controller.selectedIndex ==
-                                                  element
-                                              ? Border.all(
-                                                  color: Colors.blue.shade500,
-                                                  width: 3)
-                                              : null,
-                                          boxShadow: controller.selectedIndex ==
-                                                  element
-                                              ? [
-                                                  BoxShadow(
-                                                      color:
-                                                          Colors.blue.shade100,
-                                                      blurRadius: 30,
-                                                      offset:
-                                                          const Offset(0, 10))
-                                                ]
-                                              : [
-                                                  BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.2),
-                                                      blurRadius: 20,
-                                                      offset:
-                                                          const Offset(0, 5))
-                                                ]),
-                                      child: SingleChildScrollView(
-                                        physics: const BouncingScrollPhysics(),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              height: 320,
-                                              width: double.maxFinite,
-                                              margin: const EdgeInsets.only(
-                                                  top: 6, left: 6, right: 6),
-                                              clipBehavior: Clip.hardEdge,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  Image.asset(
-                                                    element['image'],
-                                                    fit: BoxFit.cover,
-                                                    height: 320,
-                                                    width: double.maxFinite,
-                                                  ),
-                                                  controller.selectedIndex ==
-                                                          element
-                                                      ? const Positioned(
-                                                          top: 20,
-                                                          right: 20,
-                                                          child: Icon(
-                                                            Icons.check_circle,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    101,
-                                                                    255,
-                                                                    107),
-                                                            size: 40,
-                                                            shadows: [
-                                                              Shadow(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  offset:
-                                                                      Offset(
-                                                                          1, 2),
-                                                                  blurRadius:
-                                                                      15)
-                                                            ],
-                                                          ))
-                                                      : Container(),
-                                                ],
-                                              ),
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: controller.selectedIndex == element
+                                          ? Border.all(
+                                              color: Colors.blue.shade500,
+                                              width: 3
+                                            )
+                                          : Border.all(
+                                              color: Colors.transparent,
+                                              width: 3
                                             ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                              controller.startTime.value.text,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                              element['description'],
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.grey.shade600),
-                                            ),
-                                          ],
+                                        boxShadow: controller.selectedIndex == element
+                                          ? [
+                                              BoxShadow(
+                                                color: Colors.blue.shade100,
+                                                blurRadius: 30,
+                                                offset: const Offset(0, 10)
+                                              )
+                                            ]
+                                          : [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(0.8),
+                                                blurRadius: 20,
+                                                offset: const Offset(0, 5)
+                                              )
+                                            ]
                                         ),
+                                      child: 
+                                      Stack(
+                                        alignment: Alignment.center,
+                                        fit: StackFit.expand,
+                                        children: 
+                                        [
+                                          SingleChildScrollView(
+                                            child: element["template"],
+                                          ),
+                                          controller.selectedIndex == element
+                                            ? const Positioned(
+                                                top: 20,
+                                                right: 20,
+                                                child: Icon(
+                                                  Icons.check_circle,
+                                                  color: Color.fromARGB( 255, 101, 255, 107),
+                                                  size: 40,
+                                                  shadows: [
+                                                    Shadow( 
+                                                      color: Colors.black,
+                                                      offset: Offset( 1, 2),
+                                                      blurRadius: 15
+                                                    )
+                                                  ],
+                                                ))
+                                            : Container(),
+                                        ],
                                       ),
                                     ),
                                   );
