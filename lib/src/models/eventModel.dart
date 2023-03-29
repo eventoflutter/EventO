@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 class Event {
   final String admin;
+  final String eventId;
   final String eventName;
   final String description;
   final String startTime;
@@ -25,6 +26,7 @@ class Event {
 
   Event({
     required this.admin,
+    this.eventId = "",
     required this.eventName,
     required this.description,
     required this.startTime,
@@ -76,6 +78,7 @@ class Event {
 
     Event event = Event(
       admin: data["Admin"],
+      eventId: document.reference.id,
       eventName: data["EventName"],
       description: data["Description"],
       startTime: DateFormat('d/MMM/y | h:mm a').format(st),

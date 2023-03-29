@@ -1,10 +1,13 @@
 // ignore_for_file: camel_case_types, non_constant_identifier_names
 
+import 'package:final_year_project/src/Widget/QRScanner/scanner.dart';
 import 'package:final_year_project/src/models/eventModel.dart';
 import 'package:final_year_project/src/models/usermodel.dart';
 import 'package:final_year_project/src/repos/events.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class eventlist extends StatelessWidget {
@@ -297,26 +300,31 @@ class OngoingEventCard extends StatelessWidget {
                     event.eventName,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      children: const [
-                        Text(
-                          "Scan",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 12,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => Scanner());
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      child: Row(
+                        children: const [
+                          Text(
+                            "Scan",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        Icon(
-                          Icons.qr_code_scanner_outlined,
-                          size: 16,
-                          color: Colors.blue,
-                        )
-                      ],
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Icon(
+                            Icons.qr_code_scanner_outlined,
+                            size: 16,
+                            color: Colors.blue,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -369,6 +377,9 @@ class UpcomingEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final formURI = Uri.https('theevento.live', 'EventForm', {'eventid': event.eventId});
+
     return Column(
       children: [
         Container(
@@ -442,10 +453,42 @@ class UpcomingEventCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Text(
-                    "Admin",
-                    style: TextStyle(fontSize: 12),
-                  )
+                  GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: formURI.toString()))
+                        .then((value) => {
+                          Fluttertoast.showToast(
+                            msg: "URL Copied",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor:
+                                Colors.black.withOpacity(0.6),
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                          )
+                        });
+                    },
+                    child: Row(
+                      children: const [
+                        Text(
+                          "Copy URL",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.copy_rounded,
+                          size: 16,
+                          color: Colors.blue,
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -560,3 +603,4 @@ class EndedEventCard extends StatelessWidget {
     );
   }
 }
+
